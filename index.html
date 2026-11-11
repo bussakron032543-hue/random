@@ -6,6 +6,9 @@
     <title>ระบบสุ่มรายชื่อ สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- โหลด Firebase SDK แบบง่าย -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
         body {
@@ -26,7 +29,7 @@
             display: flex; flex-direction: column; gap: 15px; text-align: center;
         }
         .big-screen {
-            font-size: 50px; font-weight: 800; color: #fffb00;
+            font-size: 45px; font-weight: 800; color: #fffb00;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); margin: 10px 0;
             word-break: break-word; min-height: 70px;
         }
@@ -47,8 +50,6 @@
             transition: 0.2s;
         }
         button:hover { transform: translateY(-2px); }
-        .qr-hint { font-size: 13px; color: #e2e8f0; margin-top: 5px; }
-        .qr-hint a { color: #38bdf8; font-weight: bold; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -76,14 +77,16 @@
 นภา</textarea>
         </div>
         <button type="button" onclick="startRandom()">🎯 สุ่มเลย!</button>
-        
-        <div class="qr-hint">
-            💡 เปิดหน้าจอมือถือรับผลที่นี่: <a href="phone.html" target="_blank">phone.html</a>
-        </div>
     </div>
 
 <script>
-    const radioChannel = new BroadcastChannel('my_random_channel');
+    // ตั้งค่าตัวเชื่อมต่อ Firebase Realtime Database
+    const firebaseConfig = {
+        databaseURL: "https://random-app-d7888-default-rtdb.firebaseio.com/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
     let isRunning = false;
 
     function startRandom() {
@@ -121,10 +124,10 @@
                 let winnerText = winners.join('<br>');
                 display.innerHTML = winnerText;
 
-                // ส่งชื่อผู้โชคดีไปที่หน้าจอมือถือทันที
-                radioChannel.postMessage({
-                    type: 'SEND_WINNER',
-                    winnerName: winnerText
+                // 🚀 ส่งชื่อผู้โชคดีขึ้น Cloud Database เพื่อซิงค์ไปมือถือทุกเครื่องแบบ Realtime
+                database.ref('current_winner').set({
+                    winnerName: winnerText,
+                    timestamp: Date.now()
                 });
 
                 confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
