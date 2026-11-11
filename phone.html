@@ -12,17 +12,31 @@
         * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
         body {
             background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-            color: #ffffff; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; height: 100vh;
-            margin: 0; padding: 20px; text-align: center; overflow: hidden;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            overflow: hidden;
         }
         .label-text {
-            font-size: 26px; color: #38bdf8; font-weight: 700;
-            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 26px;
+            color: #38bdf8;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         #result {
-            font-size: 55px; font-weight: 800; color: #facc15;
-            line-height: 1.3; word-break: break-word;
+            font-size: 55px;
+            font-weight: 800;
+            color: #facc15;
+            line-height: 1.3;
+            word-break: break-word;
             text-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
             animation: fadeInScale 0.5s ease-out;
         }
@@ -38,7 +52,7 @@
     <div id="result">รอดำเนินการ...</div>
 
     <script>
-        // 🔗 เชื่อมต่อ Firebase Realtime Database ของโปรเจกต์คุณโดยตรง
+        // 🔗 เชื่อมต่อฐานข้อมูล Firebase Realtime Database ชุดเดียวกับเว็บคอมพิวเตอร์
         const firebaseConfig = {
             databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
         };
@@ -47,14 +61,14 @@
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
 
-            // 📡 ฟังค่าจากคลาวด์แบบ Realtime
+            // 📡 ดึงข้อมูลผู้โชคดีแบบ Realtime ข้ามอุปกรณ์ทันทีเมื่อมีการกดสุ่มจากคอมพิวเตอร์
             database.ref('current_winner').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data && data.winnerName) {
                     let resultDiv = document.getElementById('result');
                     resultDiv.innerHTML = data.winnerName;
                     
-                    // รีเซ็ตแอนิเมชันเพื่อให้ขยายเด้งทุกครั้งที่รายชื่อเปลี่ยน
+                    // รีเซ็ตแอนิเมชันซูมเด้งตื่นเต้นทุกครั้งที่เปลี่ยนชื่อ
                     resultDiv.style.animation = 'none';
                     resultDiv.offsetHeight;
                     resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
