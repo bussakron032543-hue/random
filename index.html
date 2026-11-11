@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบสุ่มรายชื่อ สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</title>
-    <!-- โหลดฟอนต์ Sarabun และไลบรารี Confetti -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <!-- โหลด Firebase SDK v8 -->
@@ -14,51 +13,57 @@
         * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
         body {
             background: radial-gradient(circle at center, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
             color: #ffffff; margin: 0; padding: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: space-between; align-items: center; overflow: hidden;
         }
-        .header-title { width: 100%; display: flex; justify-content: center; padding: 30px 20px 0 20px; z-index: 10; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .header-title { width: 100%; display: flex; justify-content: center; padding: 35px 30px 0 30px; z-index: 10; }
         .header-title h1 {
-            margin: 0; font-size: 32px; font-weight: 800; color: #fffb00; text-align: center;
-            padding: 12px 30px; background: rgba(15, 23, 42, 0.85);
+            margin: 0; font-size: 38px; font-weight: 800; color: #fffb00; text-align: center;
+            padding: 14px 40px; background: rgba(15, 23, 42, 0.85);
             border: 3px solid #ffeb3b; border-radius: 20px;
-            box-shadow: 0 0 25px rgba(255, 235, 59, 0.5); max-width: 90%;
+            box-shadow: 0 0 35px rgba(255, 235, 59, 0.6); max-width: 90%;
         }
         .history-box {
-            position: absolute; top: 20px; right: 20px;
+            position: absolute; top: 25px; right: 25px;
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 10px 14px; border-radius: 14px; width: 200px; max-height: 160px;
-            overflow-y: auto; backdrop-filter: blur(10px); z-index: 10;
+            padding: 14px; border-radius: 16px; width: 220px; max-height: 180px;
+            overflow-y: auto; backdrop-filter: blur(12px); z-index: 10;
         }
-        .history-box h4 { margin: 0 0 6px 0; font-size: 13px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; }
-        #historyList { margin: 0; padding-left: 18px; font-size: 12px; color: #f8fafc; }
+        .history-box h4 { margin: 0 0 6px 0; font-size: 14px; color: #fff; border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 6px; font-weight: 700; }
+        #historyList { margin: 0; padding-left: 20px; font-size: 13px; color: #f8fafc; }
         .display-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; padding: 10px; }
         .big-screen {
-            font-size: 65px; font-weight: 800; color: #ffffff;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); text-align: center; line-height: 1.2; word-break: break-word;
+            font-size: 72px; font-weight: 800; color: #ffffff;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); text-align: center; line-height: 1.25; word-break: break-word;
         }
         .winner-anim {
             animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            color: #fffb00 !important; text-shadow: 0 0 35px rgba(255, 251, 0, 0.8) !important;
+            color: #fffb00 !important; text-shadow: 0 0 45px rgba(255, 251, 0, 0.9) !important;
         }
         @keyframes winnerPop {
             0% { transform: scale(0.6); opacity: 0; }
             60% { transform: scale(1.15); }
             100% { transform: scale(1); opacity: 1; }
         }
-        .qr-hint { margin-top: 10px; font-size: 14px; color: #ffeb3b; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.4); }
         .bottom-panel {
             width: 100%; background: rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(16px); padding: 15px 25px; display: flex; justify-content: center; align-items: center; gap: 15px; z-index: 10;
+            backdrop-filter: blur(16px); padding: 16px 30px; display: flex; justify-content: center; align-items: center; gap: 20px; z-index: 10;
         }
-        .input-group { display: flex; flex-direction: column; gap: 4px; }
-        label { font-size: 12px; color: #f1f5f9; font-weight: 600; }
-        input[type="number"] { width: 75px; padding: 8px; background: rgba(255,255,255,0.9); color: #0f172a; border-radius: 8px; font-size: 15px; font-weight: 700; text-align: center; border: none; outline: none; }
-        textarea { width: 280px; height: 42px; background: rgba(255,255,255,0.9); color: #0f172a; padding: 6px 10px; border-radius: 8px; font-size: 13px; resize: none; border: none; outline: none; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 13px; color: #f1f5f9; font-weight: 600; }
+        input[type="number"] { width: 85px; padding: 10px; background: rgba(255, 255, 255, 0.9); color: #0f172a; border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; border: none; outline: none; }
+        textarea { width: 320px; height: 48px; background: rgba(255, 255, 255, 0.9); color: #0f172a; padding: 8px 12px; border-radius: 10px; font-size: 14px; resize: none; border: none; outline: none; }
         button {
             background: linear-gradient(135deg, #ff758c, #ff7eb3); color: #ffffff; border: none;
-            padding: 0 25px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; height: 42px;
-            box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4); transition: 0.2s;
+            padding: 0 32px; border-radius: 10px; font-size: 17px; font-weight: 700; cursor: pointer; height: 48px;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4); transition: 0.2s;
         }
         button:hover { transform: translateY(-2px); }
     </style>
@@ -78,7 +83,6 @@
 
 <div class="display-container">
     <div id="display" class="big-screen">พร้อมสุ่ม</div>
-    <div class="qr-hint">📱 เปิดมือถือดูผลที่: phone.html</div>
 </div>
 
 <div class="bottom-panel">
@@ -102,22 +106,49 @@
 </div>
 
 <script>
-    // ตั้งค่า Firebase Database
+    // 🔗 เชื่อมต่อ Firebase Realtime Database
     const firebaseConfig = {
         databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
     };
-    
-    let database;
-    try {
-        firebase.initializeApp(firebaseConfig);
-        database = firebase.database();
-    } catch (e) {
-        console.log("Firebase Init Error: ", e);
-    }
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
     let allWinners = [];
     let isRunning = false;
     const luckyWords = ["รวย!", "เฮง ๆ!", "ปัง ๆ!", "โชคดี!", "รับทรัพย์!"];
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTickSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+    }
+
+    function playWinSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+        notes.forEach((freq, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.3);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(audioCtx.currentTime + index * 0.08);
+            osc.stop(audioCtx.currentTime + index * 0.08 + 0.3);
+        });
+    }
 
     function startRandom() {
         if (isRunning) return;
@@ -127,14 +158,8 @@
         let names = text.split('\n').map(n => n.trim()).filter(n => n !== "");
         let num = parseInt(document.getElementById('count').value) || 1;
 
-        if (names.length === 0) {
-            alert("รายชื่อหมดแล้ว หรือยังไม่ได้กรอกรายชื่อ!");
-            return;
-        }
-        if (num > names.length) {
-            alert("จำนวนรางวัล (" + num + ") มากกว่ารายชื่อที่เหลืออยู่ (" + names.length + ")!");
-            return;
-        }
+        if (names.length === 0) { alert("รายชื่อหมดแล้ว!"); return; }
+        if (num > names.length) { alert("จำนวนรางวัลมากกว่ารายชื่อที่มี!"); return; }
 
         isRunning = true;
         let display = document.getElementById('display');
@@ -147,13 +172,15 @@
             
             if (Math.random() > 0.5 && num === 1) {
                 let randomLucky = luckyWords[Math.floor(Math.random() * luckyWords.length)];
-                display.innerHTML = tempArr[0] + "<br><span style='font-size: 30px; color: #ffeb3b;'>💰 " + randomLucky + " 💰</span>";
+                display.innerHTML = tempArr[0] + "<br><span style='font-size: 35px; color: #ffeb3b;'>💰 " + randomLucky + " 💰</span>";
             } else {
                 display.innerHTML = tempArr.join('<br>');
             }
 
+            playTickSound();
             i++;
-            if (i > 20) {
+            
+            if (i > 22) {
                 clearInterval(timer);
                 
                 let shuffled = [...names].sort(() => 0.5 - Math.random());
@@ -162,14 +189,17 @@
                 
                 display.innerHTML = winnerText;
                 display.classList.add('winner-anim');
+                playWinSound();
 
-                // ส่งข้อมูลขึ้น Firebase
-                if (database) {
-                    database.ref('current_winner').set({
-                        winnerName: winnerText,
-                        timestamp: Date.now()
-                    });
-                }
+                // 🚀 ส่งชื่อผู้โชคดีขึ้นไปบน Firebase ทันทีที่สุ่มเสร็จ
+                database.ref('current_winner').set({
+                    winnerName: winnerText,
+                    timestamp: Date.now()
+                }).then(() => {
+                    console.log("Sync to Cloud Success!");
+                }).catch((error) => {
+                    console.error("Sync Failed: ", error);
+                });
 
                 confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
 
