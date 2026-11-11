@@ -13,91 +13,93 @@
             background-size: 200% 200%;
             animation: gradientBG 15s ease infinite;
             color: #ffffff;
-            margin: 0; padding: 0;
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
-            overflow: hidden;
+            margin: 0; padding: 20px;
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
         }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        .header-title { width: 100%; display: flex; justify-content: center; padding: 35px 30px 0 30px; z-index: 10; }
-        .header-title h1 {
-            margin: 0; font-size: 38px; font-weight: 800; color: #fffb00; text-align: center;
-            padding: 14px 40px; background: rgba(15, 23, 42, 0.85);
-            border: 3px solid #ffeb3b; border-radius: 20px;
-            box-shadow: 0 0 35px rgba(255, 235, 59, 0.6), inset 0 0 15px rgba(255, 235, 59, 0.3);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); max-width: 90%;
+        h1 {
+            font-size: 24px; font-weight: 800; color: #fffb00; text-align: center;
+            padding: 12px 20px; background: rgba(15, 23, 42, 0.85);
+            border: 2px solid #ffeb3b; border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
+            margin-bottom: 20px; max-width: 100%;
         }
-        .history-box {
-            position: absolute; top: 25px; right: 25px;
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 14px; border-radius: 16px; width: 220px; max-height: 180px;
-            overflow-y: auto; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); z-index: 10;
+        /* จำลองหน้าจอมือถือสำหรับแสดงผล */
+        .phone-wrapper {
+            width: 100%; max-width: 340px; height: 320px;
+            background: #1e293b; border: 8px solid #334155; border-radius: 30px;
+            padding: 15px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 20px;
         }
-        .history-box h4 { margin: 0 0 6px 0; font-size: 14px; color: #fff; border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 6px; font-weight: 700; }
-        #historyList { margin: 0; padding-left: 20px; font-size: 13px; color: #f8fafc; }
-        .display-container { flex: 1; display: flex; justify-content: center; align-items: center; width: 100%; padding: 10px; }
-        .big-screen { font-size: 72px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); text-align: center; line-height: 1.25; word-break: break-word; letter-spacing: 1px; transition: all 0.2s ease; }
+        .phone-wrapper h3 { color: #38bdf8; font-size: 18px; margin: 0 0 10px 0; }
+        .big-screen {
+            font-size: 42px; font-weight: 800; color: #facc15;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            word-break: break-word; line-height: 1.2;
+        }
         .winner-anim {
             animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             color: #fffb00 !important;
-            text-shadow: 0 0 45px rgba(255, 251, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
         }
         @keyframes winnerPop {
             0% { transform: scale(0.6); opacity: 0; }
             60% { transform: scale(1.15); }
             100% { transform: scale(1); opacity: 1; }
         }
-        .bottom-panel {
-            width: 100%; background: rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(16px); padding: 16px 30px; display: flex; justify-content: center; align-items: center; gap: 20px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2); z-index: 10;
+        /* แผงควบคุมและฟอร์ม */
+        .control-panel {
+            width: 100%; max-width: 400px;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
+            padding: 20px; display: flex; flex-direction: column; gap: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
-        label { font-size: 13px; color: #f1f5f9; font-weight: 600; }
+        label { font-size: 14px; color: #f1f5f9; font-weight: 600; }
         input[type="number"] {
-            width: 85px; padding: 10px; background: rgba(255, 255, 255, 0.9); color: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; outline: none;
+            width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.9);
+            color: #0f172a; border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; outline: none;
         }
         textarea {
-            width: 320px; height: 48px; background: rgba(255, 255, 255, 0.9); color: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.5); padding: 8px 12px; border-radius: 10px; font-size: 14px; resize: none; outline: none;
+            width: 100%; height: 90px; background: rgba(255, 255, 255, 0.9);
+            color: #0f172a; border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px; border-radius: 10px; font-size: 14px; resize: none; outline: none;
         }
         button {
-            background: linear-gradient(135deg, #ff758c, #ff7eb3); color: #ffffff; border: none;
-            padding: 0 32px; border-radius: 10px; font-size: 17px; font-weight: 700; cursor: pointer; height: 48px;
-            transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            background: linear-gradient(135deg, #ff758c, #ff7eb3); color: #ffffff;
+            border: none; padding: 14px; border-radius: 12px; font-size: 18px;
+            font-weight: 700; cursor: pointer; text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4); transition: 0.2s;
         }
-        button:hover { background: linear-gradient(135deg, #ff526d, #ff639e); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6); }
+        button:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
-<div class="header-title">
-    <h1>รางวัลสมาชิกผู้เข้าร่วม สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</h1>
-</div>
+    <h1>สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</h1>
 
-<div class="history-box">
-    <h4>🏆 ได้รับรางวัลแล้ว</h4>
-    <ul id="historyList">
-        <li style="color: rgba(255,255,255,0.7); list-style: none;">ยังไม่มีผู้ได้รับรางวัล</li>
-    </ul>
-</div>
-
-<div class="display-container">
-    <div id="display" class="big-screen">พร้อมสุ่ม</div>
-</div>
-
-<div class="bottom-panel">
-    <div class="input-group">
-        <label>จำนวนรางวัล:</label>
-        <input type="number" id="count" value="1" min="1">
+    <!-- หน้าจอมือถือจำลองแสดงผลในตัว -->
+    <div class="phone-wrapper">
+        <h3>🏆 หน้าจอแสดงผลผู้โชคดี</h3>
+        <div id="display" class="big-screen">พร้อมสุ่ม</div>
     </div>
-    <div class="input-group">
-        <label>รายชื่อผู้มีสิทธิ์ (บรรทัดละ 1 ชื่อ):</label>
-        <textarea id="list">สมชาย
+
+    <!-- แผงควบคุมการสุ่ม -->
+    <div class="control-panel">
+        <div class="input-group">
+            <label>จำนวนรางวัล:</label>
+            <input type="number" id="count" value="1" min="1">
+        </div>
+        <div class="input-group">
+            <label>รายชื่อผู้มีสิทธิ์ (บรรทัดละ 1 ชื่อ):</label>
+            <textarea id="list">สมชาย
 สมหญิง
 มานะ
 ปิติ
@@ -106,50 +108,13 @@
 กิตติ
 อนันต์
 นภา</textarea>
+        </div>
+        <button type="button" onclick="startRandom()">🎯 สุ่มเลย!</button>
     </div>
-    <button type="button" onclick="startRandom()">🎯 สุ่มเลย!</button>
-</div>
 
 <script>
-    // ช่องสัญญาณ BroadcastChannel สำหรับเชื่อมต่อกับหน้าจอโทรศัพท์จำลอง
-    const radioChannel = new BroadcastChannel('my_random_channel');
-    let allWinners = [];
     let isRunning = false;
-
-    const luckyWords = ["รวย!", "เฮง ๆ!", "ปัง ๆ!", "โชคดี!", "รับทรัพย์!", "เฮง รวย!"];
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    function playTickSound() {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.04);
-    }
-
-    function playWinSound() {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
-        notes.forEach((freq, index) => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.3);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(audioCtx.currentTime + index * 0.08);
-            osc.stop(audioCtx.currentTime + index * 0.08 + 0.3);
-        });
-    }
+    const luckyWords = ["รวย!", "เฮง ๆ!", "ปัง ๆ!", "โชคดี!", "รับทรัพย์!"];
 
     function startRandom() {
         if (isRunning) return;
@@ -176,55 +141,25 @@
         let timer = setInterval(() => {
             let tempShuffled = [...names].sort(() => 0.5 - Math.random());
             let tempArr = tempShuffled.slice(0, num);
-            
-            if (Math.random() > 0.5 && num === 1) {
-                let randomLucky = luckyWords[Math.floor(Math.random() * luckyWords.length)];
-                display.innerHTML = tempArr[0] + "<br><span style='font-size: 35px; color: #ffeb3b;'>💰 " + randomLucky + " 💰</span>";
-            } else {
-                display.innerHTML = tempArr.join('<br>');
-            }
-
-            playTickSound();
+            display.innerHTML = tempArr.join('<br>');
             i++;
             
-            if (i > 22) {
+            if (i > 20) {
                 clearInterval(timer);
-                
                 let shuffled = [...names].sort(() => 0.5 - Math.random());
                 let winners = shuffled.slice(0, num);
                 
                 let winnerText = winners.join('<br>');
                 display.innerHTML = winnerText;
                 display.classList.add('winner-anim');
-                playWinSound();
 
-                // ส่งข้อมูลรายชื่อผู้ชนะไปยังหน้าจอมือถือจำลองทันที
-                radioChannel.postMessage({
-                    type: 'SEND_WINNER',
-                    winnerName: winnerText
-                });
-
-                confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
-
-                winners.forEach(w => allWinners.push(w));
-                updateHistoryUI();
+                confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
 
                 let remainingNames = names.filter(n => !winners.includes(n));
                 textInput.value = remainingNames.join('\n');
-                
                 isRunning = false;
             }
         }, 80);
-    }
-
-    function updateHistoryUI() {
-        let historyList = document.getElementById('historyList');
-        historyList.innerHTML = "";
-        allWinners.forEach(winner => {
-            let li = document.createElement('li');
-            li.textContent = winner;
-            historyList.appendChild(li);
-        });
     }
 </script>
 
