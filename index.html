@@ -76,4 +76,296 @@
             z-index: 10;
         }
         .history-box h4 {
-            margin: 0
+            margin: 0 0 6px 0;
+            font-size: 14px;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 6px;
+            font-weight: 700;
+        }
+        #historyList {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #f8fafc;
+        }
+
+        /* ตรงกลาง: หน้าจอแสดงชื่อสุ่มตัวใหญ่สะใจ */
+        .display-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+        }
+        .big-screen {
+            font-size: 72px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            line-height: 1.25;
+            word-break: break-word;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        /* อนิเมชั่นซูมเด้งเมื่อได้ผู้โชคดี */
+        .winner-anim {
+            animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            color: #fffb00 !important;
+            text-shadow: 0 0 45px rgba(255, 251, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+        }
+        @keyframes winnerPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .qr-hint {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #ffeb3b;
+            font-weight: bold;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        /* ด้านล่างสุด: แผงควบคุมและช่องกรอกรายชื่อ */
+        .bottom-panel {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(16px);
+            padding: 16px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-size: 13px;
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: 85px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+        }
+        textarea {
+            width: 320px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+        button {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: #ffffff;
+            border: none;
+            padding: 0 32px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            height: 48px;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            transition: 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- หัวข้อหลักสีเหลืองทองสว่างเด่นชัด -->
+<div class="header-title">
+    <h1>รางวัลสมาชิกผู้เข้าร่วม สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</h1>
+</div>
+
+<!-- ประวัติผู้ได้รับรางวัล (มุมขวาบน) -->
+<div class="history-box">
+    <h4>🏆 ได้รับรางวัลแล้ว</h4>
+    <ul id="historyList">
+        <li style="color: rgba(255,255,255,0.7); list-style: none;">ยังไม่มีผู้ได้รับรางวัล</li>
+    </ul>
+</div>
+
+<!-- ส่วนตรงกลาง: แสดงชื่อผู้โชคดีตัวใหญ่เต็มตา -->
+<div class="display-container">
+    <div id="display" class="big-screen">พร้อมสุ่ม</div>
+    <div class="qr-hint">📱 มือถือสแกนดูผลได้ที่ลิงก์: phone.html</div>
+</div>
+
+<!-- ส่วนล่างสุด: ช่องกรอกและปุ่มกด -->
+<div class="bottom-panel">
+    <div class="input-group">
+        <label>จำนวนรางวัล:</label>
+        <input type="number" id="count" value="1" min="1">
+    </div>
+    <div class="input-group">
+        <label>รายชื่อผู้มีสิทธิ์ (บรรทัดละ 1 ชื่อ):</label>
+        <textarea id="list">สมชาย
+สมหญิง
+มานะ
+ปิติ
+ใจดี
+วีระ
+กิตติ
+อนันต์
+นภา</textarea>
+    </div>
+    <button type="button" onclick="startRandom()">🎯 สุ่มเลย!</button>
+</div>
+
+<script>
+    // 🔗 เชื่อมต่อ Firebase Realtime Database
+    const firebaseConfig = {
+        databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let allWinners = [];
+    let isRunning = false;
+
+    const luckyWords = ["รวย!", "เฮง ๆ!", "ปัง ๆ!", "โชคดี!", "รับทรัพย์!", "เฮง รวย!"];
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTickSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+    }
+
+    function playWinSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+        notes.forEach((freq, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.3);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(audioCtx.currentTime + index * 0.08);
+            osc.stop(audioCtx.currentTime + index * 0.08 + 0.3);
+        });
+    }
+
+    function startRandom() {
+        if (isRunning) return;
+        
+        let textInput = document.getElementById('list');
+        let text = textInput.value.trim();
+        let names = text.split('\n').map(n => n.trim()).filter(n => n !== "");
+        let num = parseInt(document.getElementById('count').value) || 1;
+
+        if (names.length === 0) {
+            alert("รายชื่อหมดแล้ว หรือยังไม่ได้กรอกรายชื่อ!");
+            return;
+        }
+        if (num > names.length) {
+            alert("จำนวนรางวัล (" + num + ") มากกว่ารายชื่อที่เหลืออยู่ (" + names.length + ")!");
+            return;
+        }
+
+        isRunning = true;
+        let display = document.getElementById('display');
+        display.classList.remove('winner-anim');
+        let i = 0;
+        
+        let timer = setInterval(() => {
+            let tempShuffled = [...names].sort(() => 0.5 - Math.random());
+            let tempArr = tempShuffled.slice(0, num);
+            
+            if (Math.random() > 0.5 && num === 1) {
+                let randomLucky = luckyWords[Math.floor(Math.random() * luckyWords.length)];
+                display.innerHTML = tempArr[0] + "<br><span style='font-size: 35px; color: #ffeb3b;'>💰 " + randomLucky + " 💰</span>";
+            } else {
+                display.innerHTML = tempArr.join('<br>');
+            }
+
+            playTickSound();
+            i++;
+            
+            if (i > 22) {
+                clearInterval(timer);
+                
+                let shuffled = [...names].sort(() => 0.5 - Math.random());
+                let winners = shuffled.slice(0, num);
+                
+                let winnerText = winners.join('<br>');
+                display.innerHTML = winnerText;
+                display.classList.add('winner-anim');
+                playWinSound();
+
+                // 🚀 ส่งชื่อผู้โชคดีขึ้น Cloud Database ไปยังมือถือจริงทันที
+                database.ref('current_winner').set({
+                    winnerName: winnerText,
+                    timestamp: Date.now()
+                });
+
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+
+                winners.forEach(w => allWinners.push(w));
+                updateHistoryUI();
+
+                let remainingNames = names.filter(n => !winners.includes(n));
+                textInput.value = remainingNames.join('\n');
+                
+                isRunning = false;
+            }
+        }, 80);
+    }
+
+    function updateHistoryUI() {
+        let historyList = document.getElementById('historyList');
+        historyList.innerHTML = "";
+        allWinners.forEach(winner => {
+            let li = document.createElement('li');
+            li.textContent = winner;
+            historyList.appendChild(li);
+        });
+    }
+</script>
+
+</body>
+</html>
