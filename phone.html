@@ -3,83 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าจอมือถือจำลอง - ระบบสุ่มรายชื่อ</title>
-    <!-- โหลดฟอนต์ Sarabun เพื่อความสวยงามกลมกลืนกับเว็บหลัก -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>ผู้โชคดี - สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Sarabun', sans-serif;
-        }
+        * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
         body {
-            background: #0f172a;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
             color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        /* ดีไซน์กรอบหน้าจอมือถือจำลอง */
-        .phone {
-            width: 350px;
-            height: 700px;
-            background: #1e293b;
-            border: 12px solid #334155;
-            border-radius: 45px;
-            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .winner-container {
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            position: relative;
+            padding: 20px;
+            width: 100%;
         }
-        /* ตกแต่งลำโพงจำลองด้านบนของมือถือ */
-        .phone::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            width: 80px;
-            height: 6px;
-            background: #334155;
-            border-radius: 3px;
-        }
-        h1 {
+        .label-text {
+            font-size: 24px;
             color: #38bdf8;
-            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         #result {
-            font-size: 34px;
+            font-size: 55px;
             font-weight: 800;
             color: #facc15;
-            margin-top: 15px;
             line-height: 1.3;
             word-break: break-word;
-            text-shadow: 0 2px 10px rgba(250, 204, 21, 0.4);
+            text-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
+            animation: fadeInScale 0.5s ease-out;
+        }
+        @keyframes fadeInScale {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="phone">
-        <h1>🏆 ผู้โชคดี</h1>
+    <div class="winner-container">
+        <div class="label-text">🏆 ผู้โชคดี 🏆</div>
         <div id="result">รอดำเนินการ...</div>
     </div>
 
     <script>
-        // เชื่อมต่อช่องสัญญาณวิทยุ (ชื่อช่องต้องตรงกับหน้าเว็บหลัก)
+        // เชื่อมต่อช่องสัญญาณวิทยุชื่อเดียวกันกับหน้าเว็บหลัก
         const radioChannel = new BroadcastChannel('my_random_channel');
 
-        // รอรับข้อมูลชื่อผู้โชคดีที่ส่งมาจากหน้าเว็บหลักแบบเรียลไทม์
+        // รับข้อมูลชื่อผู้โชคดีแล้วแสดงผลทันที
         radioChannel.onmessage = function (event) {
             let data = event.data;
             if (data.type === 'SEND_WINNER') {
-                document.getElementById('result').innerHTML = data.winnerName;
+                let resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = data.winnerName;
+                
+                // รีเซ็ตแอนิเมชันให้เล่นซ้ำทุกครั้งที่ชื่อใหม่เข้ามา
+                resultDiv.style.animation = 'none';
+                resultDiv.offsetHeight; /* trigger reflow */
+                resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
             }
         };
     </script>
