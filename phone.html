@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>หน้าจอมือถือจำลอง</title>
+    <style>
+        body { background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        .phone { width: 350px; height: 700px; background: #1e293b; border: 10px solid #334155; border-radius: 40px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        h1 { color: #38bdf8; font-size: 24px; }
+        #result { font-size: 32px; font-weight: bold; color: #facc15; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="phone">
+        <h1>🏆 ผู้โชคดี</h1>
+        <div id="result">รอดำเนินการ...</div>
+    </div>
+    <script>
+        // เชื่อมต่อช่องสัญญาณวิทยุชื่อเดียวกัน
+        const radioChannel = new BroadcastChannel('my_random_channel');
+
+        // รอรับข้อมูลที่ส่งมาจากเว็บหลัก
+        radioChannel.onmessage = function (event) {
+            let data = event.data;
+            if (data.type === 'SEND_WINNER') {
+                document.getElementById('result').innerHTML = data.winnerName;
+            }
+        };
+    </script>
+</body>
+</html>
