@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ผู้โชคดี - สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- โหลด Firebase SDK แบบง่าย -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
@@ -38,21 +37,20 @@
     <div id="result">รอดำเนินการ...</div>
 
     <script>
-        // ตั้งค่าตัวเชื่อมต่อ Firebase Realtime Database
+        // เชื่อมต่อฐานข้อมูล Firebase ของคุณ
         const firebaseConfig = {
-            databaseURL: "https://random-app-d7888-default-rtdb.firebaseio.com/"
+            databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // 📡 ดึงข้อมูลเรียลไทม์ทันทีเมื่อมีการอัปเดตจากหน้าเว็บหลัก
+        // รับข้อมูลจากคลาวด์แบบ Realtime
         database.ref('current_winner').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data && data.winnerName) {
                 let resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = data.winnerName;
                 
-                // เอฟเฟกต์เด้งตื่นเต้นเมื่อชื่อใหม่มา
                 resultDiv.style.animation = 'none';
                 resultDiv.offsetHeight;
                 resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
