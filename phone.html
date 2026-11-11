@@ -52,7 +52,7 @@
     <div id="result">รอดำเนินการ...</div>
 
     <script>
-        // 🔗 เชื่อมต่อฐานข้อมูล Firebase Realtime Database ชุดเดียวกับเว็บคอมพิวเตอร์
+        // 🔗 เชื่อมต่อฐานข้อมูล Firebase Realtime Database ชุดเดียวกับเว็บหลักของคุณ
         const firebaseConfig = {
             databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
         };
@@ -61,14 +61,14 @@
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
 
-            // 📡 ดึงข้อมูลผู้โชคดีแบบ Realtime ข้ามอุปกรณ์ทันทีเมื่อมีการกดสุ่มจากคอมพิวเตอร์
+            // 📡 ดึงข้อมูลผู้โชคดีแบบ Realtime ทันทีที่มีการกดสุ่มจากคอมพิวเตอร์
             database.ref('current_winner').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data && data.winnerName) {
                     let resultDiv = document.getElementById('result');
                     resultDiv.innerHTML = data.winnerName;
                     
-                    // รีเซ็ตแอนิเมชันซูมเด้งตื่นเต้นทุกครั้งที่เปลี่ยนชื่อ
+                    // รีเซ็ตแอนิเมชันให้เด้งตื่นเต้นทุกครั้งที่รายชื่อเปลี่ยน
                     resultDiv.style.animation = 'none';
                     resultDiv.offsetHeight;
                     resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
