@@ -10,89 +10,55 @@
         * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
         body {
             background: radial-gradient(circle at center, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-            background-size: 200% 200%;
-            animation: gradientBG 15s ease infinite;
-            color: #ffffff;
-            margin: 0; padding: 20px;
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            color: #ffffff; margin: 0; padding: 20px; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         h1 {
-            font-size: 24px; font-weight: 800; color: #fffb00; text-align: center;
-            padding: 12px 20px; background: rgba(15, 23, 42, 0.85);
+            font-size: 26px; font-weight: 800; color: #fffb00; text-align: center;
+            padding: 15px 25px; background: rgba(15, 23, 42, 0.85);
             border: 2px solid #ffeb3b; border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
-            margin-bottom: 20px; max-width: 100%;
+            box-shadow: 0 0 25px rgba(255, 235, 59, 0.5); margin-bottom: 20px;
         }
-        /* จำลองหน้าจอมือถือสำหรับแสดงผล */
-        .phone-wrapper {
-            width: 100%; max-width: 340px; height: 320px;
-            background: #1e293b; border: 8px solid #334155; border-radius: 30px;
-            padding: 15px; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 20px;
+        .main-card {
+            width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; gap: 15px; text-align: center;
         }
-        .phone-wrapper h3 { color: #38bdf8; font-size: 18px; margin: 0 0 10px 0; }
         .big-screen {
-            font-size: 42px; font-weight: 800; color: #facc15;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-            word-break: break-word; line-height: 1.2;
+            font-size: 50px; font-weight: 800; color: #fffb00;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); margin: 10px 0;
+            word-break: break-word; min-height: 70px;
         }
-        .winner-anim {
-            animation: winnerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            color: #fffb00 !important;
-        }
-        @keyframes winnerPop {
-            0% { transform: scale(0.6); opacity: 0; }
-            60% { transform: scale(1.15); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        /* แผงควบคุมและฟอร์ม */
-        .control-panel {
-            width: 100%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
-            padding: 20px; display: flex; flex-direction: column; gap: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; text-align: left; }
         label { font-size: 14px; color: #f1f5f9; font-weight: 600; }
         input[type="number"] {
             width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.9);
-            color: #0f172a; border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; outline: none;
+            color: #0f172a; border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; border: none; outline: none;
         }
         textarea {
-            width: 100%; height: 90px; background: rgba(255, 255, 255, 0.9);
-            color: #0f172a; border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 10px; border-radius: 10px; font-size: 14px; resize: none; outline: none;
+            width: 100%; height: 100px; background: rgba(255, 255, 255, 0.9);
+            color: #0f172a; border-radius: 10px; padding: 10px; font-size: 15px; resize: none; border: none; outline: none;
         }
         button {
             background: linear-gradient(135deg, #ff758c, #ff7eb3); color: #ffffff;
             border: none; padding: 14px; border-radius: 12px; font-size: 18px;
-            font-weight: 700; cursor: pointer; text-align: center;
-            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4); transition: 0.2s;
+            font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            transition: 0.2s;
         }
-        button:active { transform: scale(0.98); }
+        button:hover { transform: translateY(-2px); }
+        .qr-hint { font-size: 13px; color: #e2e8f0; margin-top: 5px; }
+        .qr-hint a { color: #38bdf8; font-weight: bold; text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <h1>สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</h1>
 
-    <!-- หน้าจอมือถือจำลองแสดงผลในตัว -->
-    <div class="phone-wrapper">
-        <h3>🏆 หน้าจอแสดงผลผู้โชคดี</h3>
+    <div class="main-card">
+        <div style="font-size: 14px; color: #cbd5e1; font-weight: 600;">ผลการสุ่มล่าสุด</div>
         <div id="display" class="big-screen">พร้อมสุ่ม</div>
-    </div>
 
-    <!-- แผงควบคุมการสุ่ม -->
-    <div class="control-panel">
         <div class="input-group">
             <label>จำนวนรางวัล:</label>
             <input type="number" id="count" value="1" min="1">
@@ -110,11 +76,15 @@
 นภา</textarea>
         </div>
         <button type="button" onclick="startRandom()">🎯 สุ่มเลย!</button>
+        
+        <div class="qr-hint">
+            💡 เปิดหน้าจอมือถือรับผลที่นี่: <a href="phone.html" target="_blank">phone.html</a>
+        </div>
     </div>
 
 <script>
+    const radioChannel = new BroadcastChannel('my_random_channel');
     let isRunning = false;
-    const luckyWords = ["รวย!", "เฮง ๆ!", "ปัง ๆ!", "โชคดี!", "รับทรัพย์!"];
 
     function startRandom() {
         if (isRunning) return;
@@ -135,7 +105,6 @@
 
         isRunning = true;
         let display = document.getElementById('display');
-        display.classList.remove('winner-anim');
         let i = 0;
         
         let timer = setInterval(() => {
@@ -151,9 +120,14 @@
                 
                 let winnerText = winners.join('<br>');
                 display.innerHTML = winnerText;
-                display.classList.add('winner-anim');
 
-                confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+                // ส่งชื่อผู้โชคดีไปที่หน้าจอมือถือทันที
+                radioChannel.postMessage({
+                    type: 'SEND_WINNER',
+                    winnerName: winnerText
+                });
+
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
 
                 let remainingNames = names.filter(n => !winners.includes(n));
                 textInput.value = remainingNames.join('\n');
