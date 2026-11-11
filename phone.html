@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ผู้โชคดี - สหกรณ์การเกษตรด่านมะขามเตี้ย จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- โหลด Firebase SDK v8 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
@@ -16,8 +17,8 @@
             margin: 0; padding: 20px; text-align: center; overflow: hidden;
         }
         .label-text {
-            font-size: 28px; color: #38bdf8; font-weight: 700;
-            margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 26px; color: #38bdf8; font-weight: 700;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
         }
         #result {
             font-size: 55px; font-weight: 800; color: #facc15;
@@ -37,25 +38,33 @@
     <div id="result">รอดำเนินการ...</div>
 
     <script>
-        // 🔗 เชื่อมต่อกับ Firebase URL เดียวกัน
+        // 🔗 เชื่อมต่อ Firebase Realtime Database ของโปรเจกต์คุณโดยตรง
         const firebaseConfig = {
             databaseURL: "https://random-app-dce1h-default-rtdb.firebaseio.com/"
         };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
 
-        // 📡 รอรับชื่อจากคลาวด์แล้วแสดงผลทันที
-        database.ref('current_winner').on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data && data.winnerName) {
-                let resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = data.winnerName;
-                
-                resultDiv.style.animation = 'none';
-                resultDiv.offsetHeight;
-                resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
-            }
-        });
+            // 📡 ฟังค่าจากคลาวด์แบบ Realtime
+            database.ref('current_winner').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data && data.winnerName) {
+                    let resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = data.winnerName;
+                    
+                    // รีเซ็ตแอนิเมชันเพื่อให้ขยายเด้งทุกครั้งที่รายชื่อเปลี่ยน
+                    resultDiv.style.animation = 'none';
+                    resultDiv.offsetHeight;
+                    resultDiv.style.animation = 'fadeInScale 0.5s ease-out';
+                }
+            }, (error) => {
+                console.error("Firebase Read Error: ", error);
+            });
+        } catch (e) {
+            console.error("Firebase Init Error: ", e);
+        }
     </script>
 
 </body>
